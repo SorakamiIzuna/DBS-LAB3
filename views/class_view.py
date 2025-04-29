@@ -14,11 +14,11 @@ class ClassView:
 
         self.malop = tk.Entry(root)
         self.tenlop = tk.Entry(root)
-        self.giangvien = tk.Entry(root)
+        self.MANV = tk.Entry(root)
 
         self.malop.grid(row=0, column=1)
         self.tenlop.grid(row=1, column=1)
-        self.giangvien.grid(row=2, column=1)
+        self.MANV.grid(row=2, column=1)
 
         tk.Button(root, text="Thêm", command=self.add_class).grid(row=3, column=0)
         tk.Button(root, text="Cập nhật", command=self.update_class).grid(row=3, column=1)
@@ -35,7 +35,7 @@ class ClassView:
     def display_classes(self, data):
         self.listbox.delete(0, tk.END)
         for row in data:
-            self.listbox.insert(tk.END, f"{row.MALOP} | {row.TENLOP} | {row.GIANGVIEN}")
+            self.listbox.insert(tk.END, f"{row.MALOP} | {row.TENLOP} | {row.MANV}")
 
     def get_selected_malop(self):
         selection = self.listbox.curselection()
@@ -50,24 +50,24 @@ class ClassView:
             values = self.listbox.get(selection[0]).split('|')
             self.malop.delete(0, tk.END)
             self.tenlop.delete(0, tk.END)
-            self.giangvien.delete(0, tk.END)
+            self.MANV.delete(0, tk.END)
 
             self.malop.insert(0, values[0].strip())
             self.tenlop.insert(0, values[1].strip())
-            self.giangvien.insert(0, values[2].strip())
+            self.MANV.insert(0, values[2].strip())
 
     def add_class(self):
         self.controller.add_class(
             self.malop.get(),
             self.tenlop.get(),
-            self.giangvien.get()
+            self.MANV.get()
         )
 
     def update_class(self):
         self.controller.update_class(
             self.malop.get(),
             self.tenlop.get(),
-            self.giangvien.get()
+            self.MANV.get()
         )
 
     def delete_class(self):
