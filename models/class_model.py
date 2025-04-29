@@ -6,20 +6,20 @@ class ClassModel:
 
     def get_all_classes(self):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT * FROM LOPHOC")
+        cursor.execute("SELECT * FROM LOP")
         return cursor.fetchall()
 
-    def add_class(self, malop, tenlop, giangvien):
+    def add_class(self, malop, tenlop, MANV):
         cursor = self.conn.cursor()
-        cursor.execute("INSERT INTO LOPHOC (MALOP, TENLOP, GIANGVIEN) VALUES (?, ?, ?)", (malop, tenlop, giangvien))
+        cursor.execute("INSERT INTO LOP (MALOP, TENLOP, MANV) VALUES (?, ?, ?)", (malop, tenlop, MANV))
         self.conn.commit()
 
-    def update_class(self, malop, tenlop, giangvien):
+    def update_class(self, malop, tenlop, MANV):
         cursor = self.conn.cursor()
-        cursor.execute("UPDATE LOPHOC SET TENLOP = ?, GIANGVIEN = ? WHERE MALOP = ?", (tenlop, giangvien, malop))
+        cursor.execute("UPDATE LOP SET TENLOP = ?, MANV = ? WHERE MALOP = ?", (tenlop, MANV, malop))
         self.conn.commit()
 
     def delete_class(self, malop):
         cursor = self.conn.cursor()
-        cursor.execute("DELETE FROM LOPHOC WHERE MALOP = ?", (malop,))
+        cursor.execute("DELETE FROM LOP WHERE MALOP = ?", (malop,))
         self.conn.commit()
