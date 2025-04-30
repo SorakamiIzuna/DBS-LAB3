@@ -1,9 +1,10 @@
 from models.class_model import ClassModel
 
 class ClassController:
-    def __init__(self, view):
+    def __init__(self, view, manv):
         self.model = ClassModel()
         self.view = view
+        self.manv = manv
         self.view.set_controller(self)
 
     def load_classes(self):
