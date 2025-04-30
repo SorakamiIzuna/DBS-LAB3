@@ -3,11 +3,11 @@ from tkinter import messagebox
 from controllers.user_controllers import UserController
 from views.class_view import ClassView
 from controllers.class_controller import ClassController
-class LoginScreen:
-    def __init__(self, root):
+class LoginView:
+    def __init__(self, root, on_success):
         self.root = root
         self.root.title("Đăng nhập hệ thống")
-
+        self.on_success = on_success
         # Cửa sổ
         self.root.geometry("400x300")
         self.root.resizable(False, False)
@@ -42,13 +42,8 @@ class LoginScreen:
 
         if UserController.login(username, password):
             messagebox.showinfo("Thành công", "Đăng nhập thành công!")
-            self.root.destroy()  # Đóng cửa sổ đăng nhập
-
-            # Tạo cửa sổ mới cho màn hình quản lý lớp học
-            new_root = tk.Tk()
-            view = ClassView(new_root)
-            controller = ClassController(view)
-            new_root.mainloop()
+            self.root.destroy()
+            self.on_success(username)
         else:
             messagebox.showerror("Thất bại", "Đăng nhập thất bại!")
 
