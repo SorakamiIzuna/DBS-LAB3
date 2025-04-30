@@ -1,11 +1,14 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-
+from views.grade_view import GradeView
+from controllers.grade_controller import GradeController
 class StudentView:
-    def __init__(self, root):
+    def __init__(self, root, manv):
         self.root = root
+        self.manv = manv
         self.root.title("Quản lý sinh viên")
         self.current_class = None
+        self.current_student = None  # Biến lưu thông tin sinh viên đã chọn
 
         self.controller = None
 
@@ -40,6 +43,9 @@ class StudentView:
         tk.Button(root, text="Cập nhật", command=self.update_student).grid(row=8, column=1)
         tk.Button(root, text="Xóa", command=self.delete_student).grid(row=8, column=2)
 
+        # Nút "Chấm điểm" để chuyển đến GradeView
+        tk.Button(root, text="Chấm điểm", command=self.open_grade_view).grid(row=9, column=1)
+
     def set_controller(self, controller):
         self.controller = controller
         self.controller.load_classes()
@@ -64,6 +70,7 @@ class StudentView:
             for i in range(5):
                 self.entries[i].delete(0, tk.END)
                 self.entries[i].insert(0, values[i])
+            self.current_student = values[0]  # Lưu MASV của sinh viên đã chọn
 
     def add_student(self):
         if self.current_class:
@@ -93,3 +100,16 @@ class StudentView:
             confirm = messagebox.askyesno("Xác nhận", "Bạn có chắc muốn xóa?")
             if confirm:
                 self.controller.delete_student(self.masv.get(), self.current_class)
+
+    # Mở GradeView khi bấm nút "Chấm điểm"
+    def open_grade_view(self):
+        if self.current_student:
+            grade_window = tk.Toplevel(self.root)
+            grade_view = GradeView(grade_window, self.current_student, self.manv)  # Truyền masv và manv
+            grade_controller = GradeController(grade_view, self.current_student, self.manv)
+            grade_view.set_controller(grade_controller)
+        else:
+            messagebox.showerror("Lỗi", "Vui lòng chọn sinh viên để chấm điểm.")
+
+
+
