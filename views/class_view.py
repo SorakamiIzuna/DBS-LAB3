@@ -67,7 +67,7 @@ class ClassView:
             return
         # Mở cửa sổ quản lý sinh viên
         sv_window = tk.Toplevel(self.root)
-        sv_view = StudentView(sv_window)
+        sv_view = StudentView(sv_window,self.manv)
         controller = StudentController(sv_view, self.manv)
         sv_view.class_combobox.set(malop)
         sv_view.class_selected(None)
