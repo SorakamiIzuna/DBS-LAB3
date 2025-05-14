@@ -18,5 +18,5 @@ class GradeModel:
         cursor.execute(
         "{CALL SAVE_GRADE (?, ?, ?, ?, ?)}",
         (masv, mahp, diemthi, current_prkey["PASS"], current_user["MANV"]))
-        self.connection.commit
+        self.connection.commit()
 
