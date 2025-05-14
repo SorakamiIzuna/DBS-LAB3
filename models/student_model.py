@@ -6,37 +6,28 @@ class StudentModel:
 
     def get_classes_by_user(self, manv):
         cursor = self.conn.cursor()
-        cursor.execute("SELECT MALOP, TENLOP FROM LOP WHERE MANV = ?", (manv,))
+        cursor.execute("{CALL GetClassesByUser (?)}", (manv,))
         return cursor.fetchall()
 
     def get_students_by_class(self, malop):
         cursor = self.conn.cursor()
-        cursor.execute("""
-            SELECT MASV, HOTEN, NGAYSINH, DIACHI, TENDN
-            FROM SINHVIEN
-            WHERE MALOP = ?
-        """, (malop,))
+        cursor.execute("{CALL GetStudentsByClass (?)}", (malop,))
         return cursor.fetchall()
 
     def add_student(self, masv, hoten, ngaysinh, diachi, malop, tendn, matkhau):
         cursor = self.conn.cursor()
         matkhau_varbinary = matkhau.encode('utf-8')
-        cursor.execute("""
-            INSERT INTO SINHVIEN (MASV, HOTEN, NGAYSINH, DIACHI, MALOP, TENDN, MATKHAU)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (masv, hoten, ngaysinh, diachi, malop, tendn, matkhau_varbinary))
+        cursor.execute("{CALL AddStudent (?, ?, ?, ?, ?, ?, ?)}",
+                       (masv, hoten, ngaysinh, diachi, malop, tendn, matkhau_varbinary))
         self.conn.commit()
 
     def update_student(self, masv, hoten, ngaysinh, diachi, tendn):
         cursor = self.conn.cursor()
-        cursor.execute("""
-            UPDATE SINHVIEN
-            SET HOTEN = ?, NGAYSINH = ?, DIACHI = ?, TENDN = ?
-            WHERE MASV = ?
-        """, (hoten, ngaysinh, diachi, tendn, masv))
+        cursor.execute("{CALL UpdateStudent (?, ?, ?, ?, ?)}",
+                       (masv, hoten, ngaysinh, diachi, tendn))
         self.conn.commit()
 
     def delete_student(self, masv):
         cursor = self.conn.cursor()
-        cursor.execute("DELETE FROM SINHVIEN WHERE MASV = ?", (masv,))
+        cursor.execute("{CALL DeleteStudent (?)}", (masv,))
         self.conn.commit()

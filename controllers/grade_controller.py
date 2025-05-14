@@ -9,16 +9,6 @@ class GradeController:
         self.model = GradeModel(current_student, manv)
 
     def add_grade(self, masv, mahp, diemthi):
-        # Lấy Public Key từ cơ sở dữ liệu
-        public_key = self.model.get_public_key()
-        if not public_key:
-            messagebox.showerror("Lỗi", "Không tìm thấy Public Key!")
-            return
+        self.model.save_grade(masv, mahp, diemthi)
         
-        # Mã hóa điểm thi
-        encrypted_grade = self.model.encrypt_grade(diemthi, public_key)
-
-        # Lưu điểm thi vào cơ sở dữ liệu
-        self.model.save_grade(masv, mahp, encrypted_grade)
-
         messagebox.showinfo("Thành công", "Điểm thi đã được lưu!")
