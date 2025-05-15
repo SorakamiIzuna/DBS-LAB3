@@ -5,7 +5,7 @@ from controllers.class_controller import ClassController
 from views.class_view import ClassView
 from views.student_view import StudentView
 from controllers.student_controller import StudentController
-from session import current_user
+from session import current_user, current_prkey
 
 def on_login_success(manv):
     current_user["MANV"] = manv
