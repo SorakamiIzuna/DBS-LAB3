@@ -16,9 +16,8 @@ class StudentModel:
 
     def add_student(self, masv, hoten, ngaysinh, diachi, malop, tendn, matkhau):
         cursor = self.conn.cursor()
-        matkhau_varbinary = matkhau.encode('utf-8')
         cursor.execute("{CALL AddStudent (?, ?, ?, ?, ?, ?, ?)}",
-                       (masv, hoten, ngaysinh, diachi, malop, tendn, matkhau_varbinary))
+                       (masv, hoten, ngaysinh, diachi, malop, tendn, matkhau))
         self.conn.commit()
 
     def update_student(self, masv, hoten, ngaysinh, diachi, tendn):
